@@ -1,5 +1,11 @@
+import nextPWA from 'next-pwa'
+
+const withPWA = nextPWA({
+  dest: 'public',
+})
+
 /** @type {import('next').NextConfig} */
-export default {
+const config = {
   experimental: {
     // esmExternals: false,
     typedRoutes: true,
@@ -16,3 +22,5 @@ export default {
     return config
   },
 }
+
+export default withPWA(config)
