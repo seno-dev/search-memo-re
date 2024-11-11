@@ -5,7 +5,6 @@ import {
   DndContext,
   DragEndEvent,
   KeyboardSensor,
-  PointerSensor,
   closestCenter,
   useSensor,
   useSensors,
@@ -27,6 +26,7 @@ import { EmptyState } from '@/components/ui/snippets/empty-state'
 import { Query, SearchType } from '@/features/models'
 import { updateSavedSearchQueries } from '@/features/search/actions'
 import { QueryItem } from '@/features/search/components/query-item'
+import { SmartPointerSensor } from '@/utils/dnd'
 
 interface Props {
   type: SearchType
@@ -39,7 +39,7 @@ export function Queries({ type, queries }: Props) {
   const router = useRouter()
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(SmartPointerSensor, {
       activationConstraint: { distance: 5 },
     }),
     useSensor(KeyboardSensor, {
