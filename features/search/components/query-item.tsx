@@ -58,8 +58,13 @@ function Inner({ id, delete: delete_ }: Props) {
 
   return (
     <>
-      <Editable.Preview flex={1} wordBreak='break-word' pointerEvents='none' />
-      <Editable.Input flex={1} as='textarea' />
+      <Editable.Preview
+        flex={1}
+        ml={-1}
+        wordBreak='break-word'
+        pointerEvents='none'
+      />
+      <Editable.Input flex={1} ml={-1} as='textarea' {...{ rows: 3 }} />
 
       <Editable.Control>
         <Editable.EditTrigger asChild>
