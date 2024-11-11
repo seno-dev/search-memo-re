@@ -2,8 +2,9 @@ import { Stack } from '@chakra-ui/react'
 import { Suspense } from 'react'
 
 import { Button } from '@/components/ui/snippets/button'
-import { redirectToHomeIfSignedIn, startSignIn } from '@/features/auth/actions'
+import { startSignIn } from '@/features/auth/actions'
 import { SignInError } from '@/features/auth/components/sign-in-error'
+import { redirectToHomeIfSignedIn } from '@/features/auth/internal'
 
 export default async function Page() {
   await redirectToHomeIfSignedIn()

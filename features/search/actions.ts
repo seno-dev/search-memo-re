@@ -1,19 +1,12 @@
 'use server'
 
-import { getCurrentUser } from '@/features/auth/actions'
+import { getCurrentUser } from '@/features/auth/internal'
 import { $savedSearch } from '@/features/db'
 import {
   updateSavedSearchQueriesSchema,
   updateSavedSearchTypeSchema,
 } from '@/features/search/schema'
-import { getDataOrThrow } from '@/lib/firebase.server/features/firestore'
 import { z } from '@/lib/zod'
-
-export async function getSavedSearch() {
-  const { uid } = await getCurrentUser()
-
-  return await getDataOrThrow($savedSearch(uid))
-}
 
 export async function updateSavedSearchQueries(
   input: z.input<typeof updateSavedSearchQueriesSchema>,

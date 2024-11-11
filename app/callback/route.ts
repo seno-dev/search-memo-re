@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 
-import { handleXAuthorizationRedirect } from '@/features/auth/actions'
+import { handleXAuthorizationRedirect } from '@/features/auth/internal'
 
 export async function GET(request: NextRequest): Promise<Response> {
   const { searchParams } = request.nextUrl
