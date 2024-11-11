@@ -11,6 +11,7 @@ const config = {
     // esmExternals: false,
     typedRoutes: true,
     reactCompiler: true,
+    dynamicIO: true,
     optimizePackageImports: ['@chakra-ui/react'],
   },
   // swcMinify: false,

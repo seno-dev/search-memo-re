@@ -54,7 +54,7 @@ export default function RootLayout({
           </Box>
 
           <Container maxW='lg' py={6}>
-            {children}
+            <Suspense>{children}</Suspense>
           </Container>
           <Toaster />
         </AppProvider>
