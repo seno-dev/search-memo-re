@@ -60,12 +60,7 @@ function Inner({ id, delete: delete_ }: Props) {
 
   return (
     <>
-      <Editable.Preview
-        flex={1}
-        display='inline-block'
-        overflow='hidden'
-        pointerEvents='none'
-      />
+      <Editable.Preview flex={1} wordBreak='break-word' pointerEvents='none' />
       <Editable.Input flex={1} as='textarea' />
 
       <Editable.Control>
