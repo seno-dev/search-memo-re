@@ -21,13 +21,11 @@ export function QueryItem(props: Props) {
       e.target instanceof HTMLElement &&
       !e.target.closest('button, label, a, input, textarea')
     ) {
-      window.open(
-        withSearchParams('https://x.com/search', {
-          q: text,
-          src: 'spelling_expansion_revert_click',
-          ...(type === 'default' ? {} : { f: type }),
-        }),
-      )
+      location.href = withSearchParams('https://x.com/search', {
+        q: text,
+        src: 'spelling_expansion_revert_click',
+        ...(type === 'default' ? {} : { f: type }),
+      })
     }
   }
 
