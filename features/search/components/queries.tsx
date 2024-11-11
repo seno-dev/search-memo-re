@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, HStack, Stack, StackSeparator } from '@chakra-ui/react'
+import { Box, HStack, Stack, StackSeparator, Text } from '@chakra-ui/react'
 import { createId } from '@paralleldrive/cuid2'
 import { useRouter } from 'next/navigation'
 import { useOptimistic, useState, useTransition } from 'react'
@@ -11,12 +11,13 @@ import { EmptyState } from '@/components/ui/snippets/empty-state'
 import { Query, SearchType } from '@/features/models'
 import { updateSavedSearchQueries } from '@/features/search/actions'
 import { QueryItem } from '@/features/search/components/query-item'
-import { SearchTypeToggle } from '@/features/search/components/search-type-toggle'
 
 interface Props {
   type: SearchType
   queries: Query[]
 }
+
+const maxItems = 100
 
 export function Queries({ type, queries }: Props) {
   const router = useRouter()
@@ -59,11 +60,18 @@ export function Queries({ type, queries }: Props) {
   return (
     <Stack gap={6}>
       <HStack gap={6}>
-        <SearchTypeToggle type={type} />
+        <Text
+          color='fg.muted'
+          fontSize='sm'
+        >{`${displayQueries.length} / ${maxItems}件`}</Text>
 
         <Box flex={1} />
 
-        <Button alignSelf='end' onClick={addItem}>
+        <Button
+          alignSelf='end'
+          disabled={displayQueries.length >= maxItems}
+          onClick={addItem}
+        >
           <LuPlus />
           {'追加'}
         </Button>
