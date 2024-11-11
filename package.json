@@ -15,6 +15,7 @@
     "@chakra-ui/react": "^3.1.0",
     "@conform-to/react": "^1.2.2",
     "@conform-to/zod": "^1.2.2",
+    "@dnd-kit/sortable": "^8.0.0",
     "@emotion/react": "^11.13.3",
     "@paralleldrive/cuid2": "^2.2.2",
     "@sindresorhus/is": "^7.0.1",

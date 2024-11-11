@@ -1,4 +1,6 @@
 import { Editable, IconButton, useEditableContext } from '@chakra-ui/react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { MouseEvent, useState } from 'react'
 import { LuCheck, LuPencil, LuTrash2, LuX } from 'react-icons/lu'
 
@@ -15,6 +17,22 @@ interface Props extends Query {
 export function QueryItem(props: Props) {
   const { type, defaultEdit, id, text, update, delete: delete_ } = props
   const [inputText, setInputText] = useState(text)
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id })
+
+  const sortableProps = {
+    ref: setNodeRef,
+    style: {
+      transform: CSS.Transform.toString(
+        transform && { ...transform, scaleY: 1 },
+      ),
+      transition,
+    },
+    ...attributes,
+    ...listeners,
+    touchAction: 'none',
+  }
 
   function onClick(e: MouseEvent<HTMLDivElement>) {
     if (
@@ -41,6 +59,7 @@ export function QueryItem(props: Props) {
       onValueChange={({ value }) => setInputText(value)}
       onValueCommit={({ value }) => update(id, value)}
       onClick={onClick}
+      {...sortableProps}
     >
       <Inner {...props} />
     </Editable.Root>
