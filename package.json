@@ -8,7 +8,6 @@
     "lint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
     "next:build": "npm run chakra:typegen && next build",
     "next:dev": "next dev",
-    "prepare": "lefthook install",
     "test": "vitest",
     "tsx": "tsx"
   },
