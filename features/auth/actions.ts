@@ -39,6 +39,13 @@ export async function getCurrentUser() {
   }
 }
 
+export async function redirectToHomeIfSignedIn() {
+  const session = await getCookie('session')
+  if (session) {
+    redirect('/home')
+  }
+}
+
 export async function startSignIn(): Promise<never> {
   const state = generateRandomString(32)
   const codeVerifier = generateRandomString(32)
