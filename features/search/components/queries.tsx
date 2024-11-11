@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 import { useOptimistic, useState, useTransition } from 'react'
 import { LuPlus } from 'react-icons/lu'
 
+import { Alert } from '@/components/ui/snippets/alert'
 import { Button } from '@/components/ui/snippets/button'
 import { EmptyState } from '@/components/ui/snippets/empty-state'
 import { Query, SearchType } from '@/features/models'
@@ -146,6 +147,14 @@ export function Queries({ type, queries }: Props) {
           description='[追加] を押して検索ワードを登録しましょう'
         />
       )}
+
+      {1 <= displayQueries.length && displayQueries.length <= 3 ? (
+        <Alert
+          status='neutral'
+          title='検索ワードをタップするとXアプリの検索画面が開きます'
+          size='sm'
+        />
+      ) : null}
     </Stack>
   )
 }
