@@ -1,44 +1,35 @@
-import { PointerSensor } from '@dnd-kit/core'
+import { KeyboardSensor, PointerSensor } from '@dnd-kit/core'
 
-import type { PointerEvent } from 'react'
+import type { KeyboardEvent, PointerEvent } from 'react'
 
-/**
- * An extended "PointerSensor" that prevent some
- * interactive html element(button, input, textarea, select, option...) from dragging
- */
 export class SmartPointerSensor extends PointerSensor {
   static override activators = [
     {
-      eventName: 'onPointerDown' as any,
+      eventName: 'onPointerDown' as const,
       handler: ({ nativeEvent: event }: PointerEvent) => {
-        if (
-          !event.isPrimary ||
-          event.button !== 0 ||
-          isInteractiveElement(event.target as Element)
-        ) {
-          return false
-        }
-
-        return true
+        return (
+          event.isPrimary &&
+          event.button === 0 &&
+          !isInteractive(event.target as Element)
+        )
       },
     },
   ]
 }
 
-function isInteractiveElement(element: Element | null) {
-  const interactiveElements = [
-    'button',
-    'input',
-    'textarea',
-    'select',
-    'option',
+export class SmartKeyboardSensor extends KeyboardSensor {
+  static override activators = [
+    {
+      eventName: 'onKeyDown' as const,
+      handler: ({ nativeEvent: event }: KeyboardEvent) => {
+        return !isInteractive(event.target as Element)
+      },
+    },
   ]
-  if (
-    element?.tagName &&
-    interactiveElements.includes(element.tagName.toLowerCase())
-  ) {
-    return true
-  }
+}
 
-  return false
+const interactiveTags = ['button', 'input', 'textarea', 'select', 'option']
+
+function isInteractive(el: Element | null) {
+  return el?.tagName && interactiveTags.includes(el.tagName.toLowerCase())
 }

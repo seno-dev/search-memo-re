@@ -86,6 +86,7 @@ function Inner({ id, delete: delete_ }: Props) {
         ml={-1}
         wordBreak='break-word'
         pointerEvents='none'
+        tabIndex={-1}
       />
       <Editable.Input flex={1} ml={-1} as='textarea' {...{ rows: 3 }} />
 

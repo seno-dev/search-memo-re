@@ -4,7 +4,6 @@ import { Box, HStack, Stack, StackSeparator, Text } from '@chakra-ui/react'
 import {
   DndContext,
   DragEndEvent,
-  KeyboardSensor,
   closestCenter,
   useSensor,
   useSensors,
@@ -12,7 +11,6 @@ import {
 import {
   SortableContext,
   arrayMove,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { createId } from '@paralleldrive/cuid2'
@@ -40,9 +38,9 @@ export function Queries({ type, queries }: Props) {
     useSensor(SmartPointerSensor, {
       activationConstraint: { distance: 5 },
     }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    // useSensor(KeyboardSensor, {
+    //   coordinateGetter: sortableKeyboardCoordinates,
+    // }),
   )
 
   const [displayQueries, setOptimisticQueries] = useOptimistic(
