@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
+
 import { getCurrentUser } from '@/features/auth/internal'
 import { $savedSearch } from '@/features/db'
 import {
@@ -19,6 +21,7 @@ export async function updateSavedSearchQueries(
   }
 
   await $savedSearch(uid).update(data)
+  revalidateTag(`savedSearch-${uid}`)
 }
 
 export async function updateSavedSearchType(
@@ -32,4 +35,5 @@ export async function updateSavedSearchType(
   }
 
   await $savedSearch(uid).update(data)
+  revalidateTag(`savedSearch-${uid}`)
 }

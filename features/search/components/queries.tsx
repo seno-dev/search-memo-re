@@ -16,13 +16,13 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { createId } from '@paralleldrive/cuid2'
-import { useRouter } from 'next/navigation'
 import { useOptimistic, useState, useTransition } from 'react'
 import { LuPlus } from 'react-icons/lu'
 
 import { Alert } from '@/components/ui/snippets/alert'
 import { Button } from '@/components/ui/snippets/button'
 import { EmptyState } from '@/components/ui/snippets/empty-state'
+import { toaster } from '@/components/ui/snippets/toaster'
 import { Query, SearchType } from '@/features/models'
 import { updateSavedSearchQueries } from '@/features/search/actions'
 import { QueryItem } from '@/features/search/components/query-item'
@@ -36,8 +36,6 @@ interface Props {
 const maxItems = 100
 
 export function Queries({ type, queries }: Props) {
-  const router = useRouter()
-
   const sensors = useSensors(
     useSensor(SmartPointerSensor, {
       activationConstraint: { distance: 5 },
@@ -47,7 +45,7 @@ export function Queries({ type, queries }: Props) {
     }),
   )
 
-  const [displayQueries, addOptimistic] = useOptimistic(
+  const [displayQueries, setOptimisticQueries] = useOptimistic(
     queries,
     (_, newQueries: Query[]) => newQueries,
   )
@@ -57,9 +55,12 @@ export function Queries({ type, queries }: Props) {
 
   function updateQueries(newQueries: Query[]) {
     startTransition(async () => {
-      addOptimistic(newQueries)
-      await updateSavedSearchQueries({ queries: newQueries })
-      router.refresh()
+      setOptimisticQueries(newQueries)
+      try {
+        await updateSavedSearchQueries({ queries: newQueries })
+      } catch (error) {
+        toaster.error({ title: 'エラーが発生しました' })
+      }
     })
   }
 

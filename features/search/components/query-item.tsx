@@ -1,7 +1,7 @@
 import { Editable, IconButton, useEditableContext } from '@chakra-ui/react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { LuCheck, LuPencil, LuTrash2, LuX } from 'react-icons/lu'
 
 import { Query, SearchType } from '@/features/models'
@@ -17,6 +17,10 @@ interface Props extends Query {
 export function QueryItem(props: Props) {
   const { type, defaultEdit, id, text, update, delete: delete_ } = props
   const [inputText, setInputText] = useState(text)
+
+  useEffect(() => {
+    setInputText(text)
+  }, [text])
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id })
