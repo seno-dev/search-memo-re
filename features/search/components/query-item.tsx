@@ -1,8 +1,14 @@
-import { Editable, IconButton, useEditableContext } from '@chakra-ui/react'
+import {
+  Editable,
+  HStack,
+  Icon,
+  IconButton,
+  useEditableContext,
+} from '@chakra-ui/react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { MouseEvent, useEffect, useState } from 'react'
-import { LuCheck, LuPencil, LuTrash2, LuX } from 'react-icons/lu'
+import { LuCheck, LuEqual, LuPencil, LuTrash2, LuX } from 'react-icons/lu'
 
 import { Query, SearchType } from '@/features/models'
 import { withSearchParams } from '@/utils/url'
@@ -22,17 +28,22 @@ export function QueryItem(props: Props) {
     setInputText(text)
   }, [text])
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id })
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id })
 
-  const sortableProps = {
+  const rootProps = {
     ref: setNodeRef,
-    style: {
-      transform: CSS.Transform.toString(
-        transform && { ...transform, scaleY: 1 },
-      ),
-      transition,
-    },
+    transform: CSS.Transform.toString(transform && { ...transform, scaleY: 1 }),
+    transition,
+  }
+  const activatorProps = {
+    ref: setActivatorNodeRef,
     ...attributes,
     ...listeners,
     touchAction: 'none',
@@ -52,21 +63,28 @@ export function QueryItem(props: Props) {
   }
 
   return (
-    <Editable.Root
-      py={2}
-      cursor='pointer'
-      _hover={{ bg: 'bg.subtle' }}
-      value={inputText}
-      activationMode='dblclick'
-      selectOnFocus={false}
-      defaultEdit={defaultEdit}
-      onValueChange={({ value }) => setInputText(value)}
-      onValueCommit={({ value }) => update(id, value)}
-      onClick={onClick}
-      {...sortableProps}
-    >
-      <Inner {...props} />
-    </Editable.Root>
+    <HStack gap={1} ml={-0.5} {...rootProps}>
+      <HStack alignSelf='stretch' align='center' {...activatorProps}>
+        <Icon>
+          <LuEqual />
+        </Icon>
+      </HStack>
+
+      <Editable.Root
+        py={2}
+        cursor='pointer'
+        _hover={{ bg: 'bg.subtle' }}
+        value={inputText}
+        activationMode='dblclick'
+        selectOnFocus={false}
+        defaultEdit={defaultEdit}
+        onValueChange={({ value }) => setInputText(value)}
+        onValueCommit={({ value }) => update(id, value)}
+        onClick={onClick}
+      >
+        <Inner {...props} />
+      </Editable.Root>
+    </HStack>
   )
 }
 
