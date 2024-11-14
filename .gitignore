@@ -26,7 +26,6 @@ Thumbs.db
 .firebase
 .firebaserc
 .next
-config
 coverage
 dist/**/*
 esm/**/*
