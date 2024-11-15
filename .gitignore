@@ -32,6 +32,7 @@ esm/**/*
 node_modules
 sw.js
 .vercel
+__screenshots__
 
 app/apple-icon.png
 app/icon.png
