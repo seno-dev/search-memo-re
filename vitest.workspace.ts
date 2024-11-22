@@ -9,8 +9,7 @@ export default defineWorkspace([
       name: 'unit',
       globals: true,
       environment: 'node',
-      includeSource: ['**/*.{ts,tsx}'],
-      exclude: [...configDefaults.exclude, '**/components/**/*.{ts,tsx}'],
+      include: ['**/*.server.test.ts'],
     },
   },
   {
@@ -18,7 +17,8 @@ export default defineWorkspace([
     test: {
       name: 'browser',
       globals: true,
-      includeSource: ['**/components/**/*.{ts,tsx}'],
+      include: ['**/*.test.{ts,tsx}'],
+      exclude: [...configDefaults.exclude, '**/*.server.test.ts'],
       setupFiles: ['./testing/setup.ts'],
       browser: {
         enabled: true,

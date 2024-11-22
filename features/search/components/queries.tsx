@@ -22,21 +22,21 @@ import { Button } from '@/components/ui/snippets/button'
 import { EmptyState } from '@/components/ui/snippets/empty-state'
 import { toaster } from '@/components/ui/snippets/toaster'
 import { Query, SearchType } from '@/features/models'
-import { updateSavedSearchQueries } from '@/features/search/actions'
 import { QueryItem } from '@/features/search/components/query-item'
 import { SmartPointerSensor } from '@/utils/dnd'
 
 interface Props {
   type: SearchType
   queries: Query[]
+  updateAction: (queries: Query[]) => Promise<void>
 }
 
 const maxItems = 100
 
-export function Queries({ type, queries }: Props) {
+export function Queries({ type, queries, updateAction }: Props) {
   const sensors = useSensors(
     useSensor(SmartPointerSensor, {
-      activationConstraint: { distance: 5 },
+      // activationConstraint: { distance: 5 },
     }),
     // useSensor(KeyboardSensor, {
     //   coordinateGetter: sortableKeyboardCoordinates,
@@ -55,7 +55,7 @@ export function Queries({ type, queries }: Props) {
     startTransition(async () => {
       setOptimisticQueries(newQueries)
       try {
-        await updateSavedSearchQueries({ queries: newQueries })
+        await updateAction(newQueries)
       } catch (error) {
         toaster.error({ title: 'エラーが発生しました' })
       }
@@ -126,7 +126,7 @@ export function Queries({ type, queries }: Props) {
             items={displayQueries}
             strategy={verticalListSortingStrategy}
           >
-            <Stack gap={0} separator={<StackSeparator />}>
+            <Stack as='ul' gap={0} separator={<StackSeparator />}>
               {displayQueries.map((query) => (
                 <QueryItem
                   key={query.id}

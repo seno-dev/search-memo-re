@@ -16,5 +16,8 @@ vi.mock('react', async (importOriginal) => {
         false,
       ]
     },
+    useOptimistic: (passthrough: any, reducer: any) => {
+      return [passthrough, (v: any) => {}]
+    },
   }
 })

@@ -63,8 +63,19 @@ export function QueryItem(props: Props) {
   }
 
   return (
-    <HStack gap={1} ml={-0.5} {...rootProps}>
-      <HStack alignSelf='stretch' align='center' {...activatorProps}>
+    <HStack
+      data-testid={`query-item-${id}`}
+      as='li'
+      gap={1}
+      ml={-0.5}
+      {...rootProps}
+    >
+      <HStack
+        alignSelf='stretch'
+        align='center'
+        {...activatorProps}
+        aria-label='ドラッグハンドル'
+      >
         <Icon>
           <LuEqual />
         </Icon>
@@ -100,6 +111,7 @@ function Inner({ id, delete: delete_ }: Props) {
   return (
     <>
       <Editable.Preview
+        data-testid={`query-item-${id}-preview`}
         flex={1}
         ml={-1}
         wordBreak='break-word'
@@ -110,26 +122,41 @@ function Inner({ id, delete: delete_ }: Props) {
 
       <Editable.Control>
         <Editable.EditTrigger asChild>
-          <IconButton size='xs' variant='outline'>
+          <IconButton aria-label='編集' size='xs' variant='outline'>
             <LuPencil />
           </IconButton>
         </Editable.EditTrigger>
 
         <Editable.CancelTrigger asChild>
-          <IconButton size='xs' variant='solid' colorPalette='red'>
+          <IconButton
+            aria-label='キャンセル'
+            size='xs'
+            variant='solid'
+            colorPalette='red'
+          >
             <LuX />
           </IconButton>
         </Editable.CancelTrigger>
 
         <Editable.SubmitTrigger asChild>
-          <IconButton size='xs' variant='solid' colorPalette='green'>
+          <IconButton
+            aria-label='保存'
+            size='xs'
+            variant='solid'
+            colorPalette='green'
+          >
             <LuCheck />
           </IconButton>
         </Editable.SubmitTrigger>
       </Editable.Control>
 
       {!context.editing && (
-        <IconButton variant='outline' size='xs' onClick={triggerDelete}>
+        <IconButton
+          aria-label='削除'
+          variant='outline'
+          size='xs'
+          onClick={triggerDelete}
+        >
           <LuTrash2 />
         </IconButton>
       )}

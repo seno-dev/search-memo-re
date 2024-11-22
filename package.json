@@ -9,6 +9,7 @@
     "next:build": "npm run chakra:typegen && next build",
     "next:dev": "next dev",
     "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "tsx": "tsx"
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/browser": "2.1.3",
+    "@vitest/coverage-v8": "^2.1.3",
     "babel-plugin-react-compiler": "^19.0.0-beta-6fc168f-20241025",
     "lefthook": "^1.8.2",
     "playwright": "^1.48.2",

@@ -20,7 +20,7 @@ export async function updateSavedSearchQueries(
     throw new Error('Error')
   }
 
-  await $savedSearch(uid).update(data)
+  await $savedSearch(uid).update({ queries: data })
   revalidateTag(`savedSearch-${uid}`)
 }
 
@@ -34,6 +34,6 @@ export async function updateSavedSearchType(
     throw new Error('Error')
   }
 
-  await $savedSearch(uid).update(data)
+  await $savedSearch(uid).update({ type: data })
   revalidateTag(`savedSearch-${uid}`)
 }

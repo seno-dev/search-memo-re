@@ -23,7 +23,7 @@ export function SearchTypeToggle({ type }: Props) {
   function updateType(newType: SearchType) {
     startTransition(async () => {
       addOptimistic(newType)
-      await updateSavedSearchType({ type: newType })
+      await updateSavedSearchType(newType)
       router.refresh()
     })
   }
