@@ -1,6 +1,10 @@
 import got from 'got'
 
-export const xApi = got.extend({
+import { withSearchParams } from '@/utils/url'
+
+const scope = 'tweet.read users.read'
+
+const xApi = got.extend({
   prefixUrl: 'https://api.x.com/2',
 })
 
@@ -18,6 +22,26 @@ export interface UsersMeResponse {
     username: string
     profile_image_url: string
   }
+}
+
+export function buildAuthorizationUrl({
+  redirectUrl,
+  state,
+  codeVerifier,
+}: {
+  redirectUrl: string
+  state: string
+  codeVerifier: string
+}) {
+  return withSearchParams('https://x.com/i/oauth2/authorize', {
+    response_type: 'code',
+    client_id: process.env.X_CLIENT_ID,
+    redirect_uri: redirectUrl,
+    scope,
+    state,
+    code_challenge: codeVerifier,
+    code_challenge_method: 'plain',
+  })
 }
 
 export async function xOAuth2Token({

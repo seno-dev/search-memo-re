@@ -9,8 +9,8 @@ import {
   MenuRoot,
   MenuTrigger,
 } from '@/components/ui/snippets/menu'
-import { signOut } from '@/features/auth/actions'
 import { Profile } from '@/features/models'
+import { signOutAction } from '@/features/server/_http/actions'
 
 interface Props extends Profile {}
 
@@ -20,7 +20,7 @@ export function ProfileMenu({ imageUrl }: Props) {
       onSelect={({ value }) => {
         if (value === 'sign-out') {
           if (confirm('ログアウトしますか？')) {
-            void signOut()
+            void signOutAction()
           }
         }
       }}

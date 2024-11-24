@@ -1,7 +1,7 @@
 import { Stack } from '@chakra-ui/react'
 import { Suspense } from 'react'
 
-import { QueriesContainer } from '@/features/search/components/queries-container'
+import { QueriesContainer } from '@/features/client/search/queries.container'
 
 export default async function Page() {
   return (

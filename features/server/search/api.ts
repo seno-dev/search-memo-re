@@ -3,8 +3,8 @@ import {
   unstable_cacheTag as cacheTag,
 } from 'next/cache'
 
-import { getCurrentUser } from '@/features/auth/internal'
 import { $savedSearch } from '@/features/db'
+import { auth } from '@/features/server/_http/auth'
 import { getDataOrThrow } from '@/lib/firebase.server/features/firestore'
 
 async function cachedSavedSearch(uid: string) {
@@ -16,7 +16,7 @@ async function cachedSavedSearch(uid: string) {
 }
 
 export async function getSavedSearch() {
-  const { uid } = await getCurrentUser()
+  const { uid } = await auth.getCurrentUser()
 
   return await cachedSavedSearch(uid)
 }
