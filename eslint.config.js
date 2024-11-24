@@ -4,7 +4,7 @@ import config from '@seno-dev/eslint-config'
 
 export default ts.config(
   {
-    ignores: ['**/.next/**', '**/dist/**', 'components/ui/snippets'],
+    ignores: ['.next', 'dist', 'public', 'components/ui/snippets'],
   },
   {
     ...next.configs.recommended,
@@ -17,7 +17,8 @@ export default ts.config(
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
       parserOptions: {
-        project: './tsconfig.json',
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
