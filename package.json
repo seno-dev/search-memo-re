@@ -41,7 +41,7 @@
     "@chakra-ui/cli": "^3.1.0",
     "@faker-js/faker": "^9.2.0",
     "@next/eslint-plugin-next": "^15.0.3",
-    "@rs2837/eslint-config": "^1.0.1",
+    "@seno-dev/eslint-config": "^1.0.2",
     "@sindresorhus/tsconfig": "5.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@types/next-pwa": "^5.6.9",

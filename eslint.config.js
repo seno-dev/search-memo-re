@@ -1,6 +1,6 @@
 import ts from 'typescript-eslint'
 import next from '@next/eslint-plugin-next'
-import config from '@rs2837/eslint-config'
+import config from '@seno-dev/eslint-config'
 
 export default ts.config(
   {
