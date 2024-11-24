@@ -9,8 +9,8 @@ import {
   MenuRoot,
   MenuTrigger,
 } from '@/components/ui/snippets/menu'
+import { signOutAction } from '@/features/_http/actions'
 import { Profile } from '@/features/models'
-import { signOutAction } from '@/features/server/_http/actions'
 
 interface Props extends Profile {}
 

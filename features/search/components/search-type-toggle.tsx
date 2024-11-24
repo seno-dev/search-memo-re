@@ -4,7 +4,7 @@ import { useOptimistic, useTransition } from 'react'
 
 import { Button } from '@/components/ui/snippets/button'
 import { SearchType } from '@/features/models'
-import { updateSavedSearchType } from '@/features/server/search/actions'
+import { updateSavedSearchType } from '@/features/search/actions'
 
 interface Props {
   type: SearchType

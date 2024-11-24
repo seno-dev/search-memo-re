@@ -2,9 +2,9 @@ import { Stack } from '@chakra-ui/react'
 import { Suspense } from 'react'
 
 import { Button } from '@/components/ui/snippets/button'
-import { SignInError } from '@/features/client/auth/sign-in-error'
-import { startSignInAction } from '@/features/server/_http/actions'
-import { redirectToHomeIfSignedIn } from '@/features/server/_http/api'
+import { startSignInAction } from '@/features/_http/actions'
+import { redirectToHomeIfSignedIn } from '@/features/_http/api'
+import { SignInErrorContainer } from '@/features/_http/components/sign-in-error.container'
 
 export default async function Page() {
   await redirectToHomeIfSignedIn()
@@ -12,7 +12,7 @@ export default async function Page() {
   return (
     <Stack gap={6}>
       <Suspense>
-        <SignInError />
+        <SignInErrorContainer />
       </Suspense>
 
       <Button onClick={startSignInAction}>{'Xでログイン'}</Button>

@@ -21,8 +21,8 @@ import { Alert } from '@/components/ui/snippets/alert'
 import { Button } from '@/components/ui/snippets/button'
 import { EmptyState } from '@/components/ui/snippets/empty-state'
 import { toaster } from '@/components/ui/snippets/toaster'
-import { QueryItem } from '@/features/client/search/query-item'
 import { Query, SearchType } from '@/features/models'
+import { QueryItem } from '@/features/search/components/query-item'
 import { SmartPointerSensor } from '@/utils/dnd'
 
 interface Props {

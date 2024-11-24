@@ -1,8 +1,12 @@
+import { auth } from '@/features/_http/auth'
+import { cookie } from '@/features/_http/cookie'
+import { router } from '@/features/_http/router'
 import { $savedSearch } from '@/features/db'
 import { Profile } from '@/features/models'
-import { auth } from '@/features/server/_http/auth'
-import { cookie } from '@/features/server/_http/cookie'
-import { router } from '@/features/server/_http/router'
+
+export async function getCurrentUser() {
+  return await auth.getCurrentUser()
+}
 
 export async function redirectToHomeIfSignedIn() {
   const session = await cookie.get('session')

@@ -1,6 +1,6 @@
 'use server'
 
-import { auth } from '@/features/server/_http/auth'
+import { auth } from '@/features/_http/auth'
 
 export async function startSignInAction() {
   await auth.startSignIn()

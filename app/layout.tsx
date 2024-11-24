@@ -5,7 +5,7 @@ import React, { Suspense } from 'react'
 
 import { AppProvider } from '@/components/ui/app-provider'
 import { Toaster } from '@/components/ui/snippets/toaster'
-import { ProfileMenuContainer } from '@/features/client/auth/profile-menu.container'
+import { ProfileMenuContainer } from '@/features/_http/components/profile-menu.container'
 
 const inter = Inter({
   subsets: ['latin'],

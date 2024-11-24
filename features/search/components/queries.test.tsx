@@ -1,8 +1,8 @@
 import { Locator } from '@vitest/browser/context'
 import { ComponentProps } from 'react'
 
-import { Queries } from '@/features/client/search/queries'
 import { Query } from '@/features/models'
+import { Queries } from '@/features/search/components/queries'
 import { render } from '@/testing/vitest-browser'
 
 afterEach(() => {

@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 
-import { handleXRedirect } from '@/features/server/_http/api'
+import { handleXRedirect } from '@/features/_http/api'
 
 export async function GET(request: NextRequest): Promise<Response> {
   const { searchParams } = request.nextUrl

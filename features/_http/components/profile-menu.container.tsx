@@ -1,5 +1,5 @@
-import { ProfileMenu } from '@/features/client/auth/profile-menu'
-import { getProfileFromCookie } from '@/features/server/_http/api'
+import { getProfileFromCookie } from '@/features/_http/api'
+import { ProfileMenu } from '@/features/_http/components/profile-menu'
 
 export async function ProfileMenuContainer() {
   const profile = await getProfileFromCookie()

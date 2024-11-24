@@ -2,18 +2,18 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { getCurrentUser } from '@/features/_http/api'
 import { $savedSearch } from '@/features/db'
-import { auth } from '@/features/server/_http/auth'
 import {
   updateSavedSearchQueriesSchema,
   updateSavedSearchTypeSchema,
-} from '@/features/server/search/schema'
+} from '@/features/search/schema'
 import { z } from '@/lib/zod'
 
 export async function updateSavedSearchQueries(
   input: z.input<typeof updateSavedSearchQueriesSchema>,
 ) {
-  const { uid } = await auth.getCurrentUser()
+  const { uid } = await getCurrentUser()
 
   const { success, data } = updateSavedSearchQueriesSchema.safeParse(input)
   if (!success) {
@@ -27,7 +27,7 @@ export async function updateSavedSearchQueries(
 export async function updateSavedSearchType(
   input: z.input<typeof updateSavedSearchTypeSchema>,
 ) {
-  const { uid } = await auth.getCurrentUser()
+  const { uid } = await getCurrentUser()
 
   const { success, data } = updateSavedSearchTypeSchema.safeParse(input)
   if (!success) {

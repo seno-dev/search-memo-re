@@ -1,13 +1,13 @@
 import { HTTPError } from 'got'
 
-import { Profile } from '@/features/models'
-import { cookie } from '@/features/server/_http/cookie'
-import { router } from '@/features/server/_http/router'
+import { cookie } from '@/features/_http/cookie'
+import { router } from '@/features/_http/router'
 import {
   buildAuthorizationUrl,
   xOAuth2Token,
   xUsersMe,
-} from '@/features/server/external/x-api'
+} from '@/features/external/x-api'
+import { Profile } from '@/features/models'
 import { authAdmin } from '@/lib/firebase.server/features/auth'
 import { getIdToken } from '@/lib/firebase.server/utils'
 import { generateRandomString } from '@/utils/string'
