@@ -111,7 +111,6 @@ function Inner({ id, delete: delete_ }: Props) {
   return (
     <>
       <Editable.Preview
-        data-testid={`query-item-${id}-preview`}
         flex={1}
         ml={-1}
         wordBreak='break-word'

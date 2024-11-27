@@ -3,6 +3,7 @@ import { ComponentProps } from 'react'
 
 import { Query } from '@/features/models'
 import { Queries } from '@/features/search/components/queries'
+import { closest, onlyVisible } from '@/testing/utils'
 import { render } from '@/testing/vitest-browser'
 
 afterEach(() => {
@@ -54,7 +55,7 @@ it('追加ボタンを押すとupdateActionが呼ばれitemが編集モードで
     { id: expect.any(String), text: '' },
   ])
 
-  const $item = $.getByTestId(/^query-item-\w+$/)
+  const $item = $.getByRole('listitem')
   await expect.element($item).toHaveTextContent(/^$/)
   await expect.element($item.getByRole('textbox')).toBeVisible()
 })
@@ -62,11 +63,8 @@ it('追加ボタンを押すとupdateActionが呼ばれitemが編集モードで
 it('データが更新されるとpreviewが更新される', async () => {
   const mocks = prepareMocks(defaultQueries)
   const $ = render(<Queries {...defaultProps} {...mocks()} />)
-  const $preview1 = $.getByTestId('query-item-1-preview')
-  const $preview2 = $.getByTestId('query-item-2-preview')
-
-  await expect.element($preview1).toHaveTextContent(/^テスト1$/)
-  await expect.element($preview2).toHaveTextContent(/^テスト2$/)
+  const $preview1 = onlyVisible($.getByText('テスト1'))
+  const $preview2 = onlyVisible($.getByText('テスト2'))
 
   $.rerender(
     <Queries
@@ -86,10 +84,8 @@ it('データが更新されるとpreviewが更新される', async () => {
 it('itemのテキストを編集して保存するとpreviewが更新されupdateActionが呼ばれる', async () => {
   const mocks = prepareMocks(defaultQueries)
   const $ = render(<Queries {...defaultProps} {...mocks()} />)
-  const $item = $.getByTestId('query-item-2')
-  const $preview = $.getByTestId('query-item-2-preview')
-
-  await expect.element($preview).toHaveTextContent(/^テスト2$/)
+  const $preview = onlyVisible($.getByText('テスト2'))
+  const $item = closest($preview, 'li')
 
   await $item.getByLabelText('編集').click()
   await $item.getByRole('textbox').fill('テスト2-edited')
@@ -108,10 +104,8 @@ it('itemのテキストを編集して保存するとpreviewが更新されupdat
 it('itemのテキスト編集をキャンセルするとpreviewが元に戻りupdateActionが呼ばれない', async () => {
   const mocks = prepareMocks(defaultQueries)
   const $ = render(<Queries {...defaultProps} {...mocks()} />)
-  const $item = $.getByTestId('query-item-2')
-  const $preview = $.getByTestId('query-item-2-preview')
-
-  await expect.element($preview).toHaveTextContent(/^テスト2$/)
+  const $preview = onlyVisible($.getByText('テスト2'))
+  const $item = closest($preview, 'li')
 
   await $item.getByLabelText('編集').click()
   await $item.getByRole('textbox').fill('テスト2-edited')
@@ -127,7 +121,8 @@ it('itemの削除ボタンを押しconfirmするとupdateActionが呼ばれitem�
   vi.spyOn(window, 'confirm').mockReturnValue(true)
   const mocks = prepareMocks(defaultQueries)
   const $ = render(<Queries {...defaultProps} {...mocks()} />)
-  const $item = $.getByTestId('query-item-2')
+  const $preview = onlyVisible($.getByText('テスト2'))
+  const $item = closest($preview, 'li')
 
   await $item.getByLabelText('削除').click()
   $.rerender(<Queries {...defaultProps} {...mocks()} />)
@@ -141,7 +136,8 @@ it('itemの削除ボタンを押しconfirmしないとupdateActionが呼ばれ�
   vi.spyOn(window, 'confirm').mockReturnValue(false)
   const mocks = prepareMocks(defaultQueries)
   const $ = render(<Queries {...defaultProps} {...mocks()} />)
-  const $item = $.getByTestId('query-item-2')
+  const $preview = onlyVisible($.getByText('テスト2'))
+  const $item = closest($preview, 'li')
 
   await $item.getByLabelText('削除').click()
   $.rerender(<Queries {...defaultProps} {...mocks()} />)
