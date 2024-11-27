@@ -1,6 +1,7 @@
 import ts from 'typescript-eslint'
 import next from '@next/eslint-plugin-next'
 import config from '@seno-dev/eslint-config'
+import importScope from 'eslint-plugin-import-scope'
 
 export default ts.config(
   {
@@ -21,6 +22,9 @@ export default ts.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    plugins: {
+      'import-scope': importScope,
+    },
     rules: {
       'no-restricted-imports': [
         'error',
@@ -28,6 +32,16 @@ export default ts.config(
           paths: ['zod', 'vitest-browser-react'],
           patterns: ['**/__mocks__/**'],
         },
+      ],
+      'import-scope/import-scope': [
+        'error',
+        [
+          { dir: 'features/*', scope: '.' },
+          { file: 'features/*/api.ts', scope: './components' },
+          { file: 'features/*/actions.ts', scope: './components' },
+          { file: 'features/*/components/*.container.tsx', scope: 'app' },
+          { dir: 'features/_*', scope: ['features', 'app'] },
+        ],
       ],
     },
   },

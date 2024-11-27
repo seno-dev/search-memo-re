@@ -1,12 +1,12 @@
 import { HTTPError } from 'got'
 
-import { cookie } from '@/features/_http/cookie'
-import { router } from '@/features/_http/router'
 import {
   buildAuthorizationUrl,
   xOAuth2Token,
   xUsersMe,
-} from '@/features/external/x-api'
+} from '@/features/_external/x-api'
+import { cookie } from '@/features/_http/cookie'
+import { router } from '@/features/_http/router'
 import { Profile } from '@/features/models'
 import { authAdmin } from '@/lib/firebase.server/features/auth'
 import { getIdToken } from '@/lib/firebase.server/utils'
