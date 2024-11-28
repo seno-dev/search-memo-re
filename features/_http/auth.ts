@@ -8,8 +8,8 @@ import {
 import { cookie } from '@/features/_http/cookie'
 import { router } from '@/features/_http/router'
 import { Profile } from '@/features/models'
-import { authAdmin } from '@/lib/firebase.server/features/auth'
-import { getIdToken } from '@/lib/firebase.server/utils'
+import { authAdmin } from '@/lib/firebase/server/app'
+import { getIdToken } from '@/lib/firebase/server/id-token'
 import { generateRandomString } from '@/utils/string'
 
 class Auth {

@@ -5,7 +5,7 @@ import {
 
 import { getCurrentUser } from '@/features/_http/api'
 import { $savedSearch } from '@/features/db'
-import { getDataOrThrow } from '@/lib/firebase.server/features/firestore'
+import { getDataOrThrow } from '@/lib/firebase/server/utils/firestore'
 
 async function cachedSavedSearch(uid: string) {
   'use cache'

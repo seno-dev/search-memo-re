@@ -5,16 +5,9 @@ import {
   Query,
   QueryDocumentSnapshot,
   Transaction,
-  getFirestore,
 } from 'firebase-admin/firestore'
 
-import { appAdmin } from '@/lib/firebase.server/app'
 import { R } from '@/lib/remeda'
-
-export const firestoreAdmin = getFirestore(appAdmin)
-try {
-  firestoreAdmin.settings({ ignoreUndefinedProperties: true })
-} catch (error) {}
 
 export type WithMeta<T> = T & {
   id?: string
