@@ -1,11 +1,11 @@
 import { EmulatorMockTokenOptions } from '@firebase/util'
 import got from 'got'
 
-import { emulatorHost, emulatorProjectId } from '@/lib/firebase/constants'
+import { emulatorHost } from '@/lib/firebase/constants'
 
 const emulatorApi = {
   firestore: got.extend({
-    prefixUrl: `http://${emulatorHost.firestore}/emulator/v1/projects/${emulatorProjectId}`,
+    prefixUrl: `http://${emulatorHost.firestore}/emulator/v1/projects/${process.env.FIREBASE_EMULATOR_PROJECT_ID}`,
   }),
 }
 

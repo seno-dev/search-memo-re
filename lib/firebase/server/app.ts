@@ -4,8 +4,12 @@ import { getFirestore } from 'firebase-admin/firestore'
 
 import { emulatorHost } from '@/lib/firebase/constants'
 
-const options = process.env._FIREBASE_SERVICE_ACCOUNT
-  ? { credential: cert(JSON.parse(process.env._FIREBASE_SERVICE_ACCOUNT)) }
+const serviceAccountJson = process.env._FIREBASE_SERVICE_ACCOUNT?.replaceAll(
+  '\n',
+  '\\n',
+)
+const options = serviceAccountJson
+  ? { credential: cert(JSON.parse(serviceAccountJson)) }
   : undefined
 
 if (process.env.NODE_ENV === 'test') {

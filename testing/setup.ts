@@ -1,4 +1,12 @@
-import '@testing-library/jest-dom/vitest'
+vi.mock('@/features/_http/api')
+
+vi.mock('next/cache', async (importOriginal) => {
+  return {
+    unstable_cacheLife: vi.fn(),
+    unstable_cacheTag: vi.fn(),
+    revalidateTag: vi.fn(),
+  }
+})
 
 vi.mock('react', async (importOriginal) => {
   const mod = await importOriginal<typeof import('react')>()

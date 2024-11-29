@@ -22,7 +22,7 @@ Thumbs.db
 .cache
 .config
 .data
-.env
+.env*.local
 .firebase
 .firebaserc
 .next

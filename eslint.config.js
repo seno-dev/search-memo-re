@@ -39,7 +39,10 @@ export default ts.config(
           { dir: 'features/*', scope: '.' },
           { file: 'features/*/api.ts', scope: './components' },
           { file: 'features/*/actions.ts', scope: './components' },
-          { file: 'features/*/components/*.container.tsx', scope: 'app' },
+          {
+            file: 'features/*/components/*.container.tsx',
+            scope: ['.', 'app'],
+          },
           { dir: 'features/_*', scope: ['features', 'app'] },
         ],
       ],

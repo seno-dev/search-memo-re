@@ -1,25 +1,35 @@
-import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import { configDefaults, defineWorkspace } from 'vitest/config'
+
+const glob = {
+  all: '**/*.test.{ts,tsx}',
+  components: '**/components/**/*.test.{ts,tsx}',
+  containers: '**/components/**/*.container.test.{ts,tsx}',
+}
 
 export default defineWorkspace([
   {
-    plugins: [tsconfigPaths()],
+    extends: './vitest.config.ts',
     test: {
-      name: 'unit',
-      globals: true,
+      name: 'node',
       environment: 'node',
-      include: ['**/*.server.test.ts'],
+      include: [glob.all],
+      exclude: [...configDefaults.exclude, glob.components],
     },
   },
   {
-    plugins: [react(), tsconfigPaths()],
+    extends: './vitest.config.ts',
     test: {
-      name: 'browser',
-      globals: true,
-      include: ['**/*.test.{ts,tsx}'],
-      exclude: [...configDefaults.exclude, '**/*.server.test.ts'],
-      setupFiles: ['./testing/setup.ts'],
+      name: 'containers',
+      environment: 'node',
+      include: [glob.containers],
+    },
+  },
+  {
+    extends: './vitest.config.ts',
+    test: {
+      name: 'components',
+      include: [glob.components],
+      exclude: [glob.containers],
       browser: {
         enabled: true,
         headless: true,

@@ -3,7 +3,7 @@ import { ComponentProps } from 'react'
 
 import { Query } from '@/features/models'
 import { Queries } from '@/features/search/components/queries'
-import { closest, onlyVisible } from '@/testing/utils'
+import { closest, onlyVisible } from '@/testing/dom'
 import { render } from '@/testing/vitest-browser'
 
 afterEach(() => {
