@@ -1,13 +1,13 @@
 import { Stack } from '@chakra-ui/react'
 import { Suspense } from 'react'
 
-import { QueriesContainer } from '@/features/search/components/queries.container'
+import { QueryListContainer } from '@/features/search/components/query-list.container'
 
 export default async function Page() {
   return (
     <Stack gap={6}>
       <Suspense>
-        <QueriesContainer />
+        <QueryListContainer />
       </Suspense>
     </Stack>
   )

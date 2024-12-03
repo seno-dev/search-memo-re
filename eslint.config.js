@@ -29,7 +29,10 @@ export default ts.config(
       'no-restricted-imports': [
         'error',
         {
-          paths: ['zod', 'vitest-browser-react'],
+          paths: [
+            'zod',
+            { name: 'vitest-browser-react', importNames: ['render'] },
+          ],
           patterns: ['**/__mocks__/**'],
         },
       ],
@@ -38,12 +41,8 @@ export default ts.config(
         [
           { dir: 'features/*', scope: '.' },
           { file: 'features/*/api.ts', scope: './components' },
-          { file: 'features/*/actions.ts', scope: './components' },
-          {
-            file: 'features/*/components/*.container.tsx',
-            scope: ['.', 'app'],
-          },
-          { dir: 'features/_*', scope: ['features', 'app'] },
+          { file: 'features/*/components/*.container.tsx', scope: 'app' },
+          { dir: 'features/_*', scope: ['features', 'app', 'e2e'] },
         ],
       ],
     },
