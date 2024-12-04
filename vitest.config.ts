@@ -19,6 +19,6 @@ export default defineConfig({
     },
     env: parsedEnv,
     globals: true,
-    setupFiles: ['./testing/setup.ts'],
+    setupFiles: ['./testing/vitest-browser/setup.ts'],
   },
 })

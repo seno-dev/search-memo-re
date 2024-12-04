@@ -8,14 +8,19 @@ const xApi = got.extend({
   prefixUrl: 'https://api.x.com/2',
 })
 
-export interface OAuth2TokenResponse {
+export interface CallbackParams {
+  state: string | undefined
+  code: string | undefined
+}
+
+export interface GenerateXAccessTokenResponse {
   token_type: string
   expires_in: number
   access_token: string
   scope: string
 }
 
-export interface UsersMeResponse {
+export interface GetXUserSelfResponse {
   data: {
     id: string
     name: string
@@ -24,7 +29,7 @@ export interface UsersMeResponse {
   }
 }
 
-export function buildAuthorizationUrl({
+export function buildXAuthorizationUrl({
   redirectUrl,
   state,
   codeVerifier,
@@ -44,20 +49,22 @@ export function buildAuthorizationUrl({
   })
 }
 
-export async function xOAuth2Token({
-  code,
-  codeVerifier,
-  redirectUrl,
-}: {
+export interface GenerateXAccessTokenParams {
   code: string
   codeVerifier: string
   redirectUrl: string
-}) {
+}
+
+export async function generateXAccessToken({
+  code,
+  codeVerifier,
+  redirectUrl,
+}: GenerateXAccessTokenParams) {
   const credential = Buffer.from(
     `${process.env.X_CLIENT_ID}:${process.env.X_CLIENT_SECRET}`,
   ).toString('base64')
 
-  return await xApi
+  const { access_token } = await xApi
     .post('oauth2/token', {
       headers: {
         authorization: `Basic ${credential}`,
@@ -69,11 +76,13 @@ export async function xOAuth2Token({
         code_verifier: codeVerifier,
       },
     })
-    .json<OAuth2TokenResponse>()
+    .json<GenerateXAccessTokenResponse>()
+
+  return access_token
 }
 
-export async function xUsersMe({ accessToken }: { accessToken: string }) {
-  return await xApi
+export async function getXUserSelf(accessToken: string) {
+  const { data } = await xApi
     .get('users/me', {
       headers: {
         authorization: `Bearer ${accessToken}`,
@@ -82,5 +91,7 @@ export async function xUsersMe({ accessToken }: { accessToken: string }) {
         'user.fields': 'profile_image_url',
       },
     })
-    .json<UsersMeResponse>()
+    .json<GetXUserSelfResponse>()
+
+  return data
 }

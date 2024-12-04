@@ -9,12 +9,13 @@ import {
   MenuRoot,
   MenuTrigger,
 } from '@/components/ui/snippets/menu'
-import { signOutAction } from '@/features/_http/actions'
 import { Profile } from '@/features/models'
 
-interface Props extends Profile {}
+interface Props extends Profile {
+  signOutAction: () => Promise<void>
+}
 
-export function ProfileMenu({ imageUrl }: Props) {
+export function ProfileMenu({ imageUrl, signOutAction }: Props) {
   return (
     <MenuRoot
       onSelect={({ value }) => {

@@ -2,9 +2,8 @@ import { Locator } from '@vitest/browser/context'
 import { ComponentProps } from 'react'
 
 import { Query } from '@/features/models'
-import { Queries } from '@/features/search/components/queries'
-import { closest, onlyVisible } from '@/testing/dom'
-import { render } from '@/testing/vitest-browser'
+import { QueryList } from '@/features/search/components/query-list'
+import { closest, onlyVisible, render } from '@/testing/vitest-browser/dom'
 
 afterEach(() => {
   vi.restoreAllMocks()
@@ -12,7 +11,7 @@ afterEach(() => {
 
 const defaultProps = {
   type: 'default',
-} satisfies Partial<ComponentProps<typeof Queries>>
+} satisfies Partial<ComponentProps<typeof QueryList>>
 
 const defaultQueries = [
   { id: '1', text: 'テスト1' },
@@ -34,7 +33,7 @@ const getRect = (l: Locator) => l.element().getBoundingClientRect()
 
 it('queryが0件の場合empty stateが表示される', async () => {
   const mocks = prepareMocks([])
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
 
   await expect
     .element($.getByText('検索ワードが登録されていません'))
@@ -44,11 +43,11 @@ it('queryが0件の場合empty stateが表示される', async () => {
 
 it('追加ボタンを押すとupdateActionが呼ばれitemが編集モードで追加される', async () => {
   const mocks = prepareMocks([])
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $add = $.getByText('追加', { exact: true })
 
   await $add.click()
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   expect(mocks().updateAction).toBeCalledTimes(1)
   expect(mocks().updateAction).toBeCalledWith([
@@ -62,12 +61,12 @@ it('追加ボタンを押すとupdateActionが呼ばれitemが編集モードで
 
 it('データが更新されるとpreviewが更新される', async () => {
   const mocks = prepareMocks(defaultQueries)
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $preview1 = onlyVisible($.getByText('テスト1'))
   const $preview2 = onlyVisible($.getByText('テスト2'))
 
   $.rerender(
-    <Queries
+    <QueryList
       {...defaultProps}
       {...mocks()}
       queries={[
@@ -83,14 +82,14 @@ it('データが更新されるとpreviewが更新される', async () => {
 
 it('itemのテキストを編集して保存するとpreviewが更新されupdateActionが呼ばれる', async () => {
   const mocks = prepareMocks(defaultQueries)
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $preview = onlyVisible($.getByText('テスト2'))
   const $item = closest($preview, 'li')
 
   await $item.getByLabelText('編集').click()
   await $item.getByRole('textbox').fill('テスト2-edited')
   await $item.getByLabelText('保存').click()
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   await expect.element($preview).toHaveTextContent(/^テスト2-edited$/)
 
@@ -103,14 +102,14 @@ it('itemのテキストを編集して保存するとpreviewが更新されupdat
 
 it('itemのテキスト編集をキャンセルするとpreviewが元に戻りupdateActionが呼ばれない', async () => {
   const mocks = prepareMocks(defaultQueries)
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $preview = onlyVisible($.getByText('テスト2'))
   const $item = closest($preview, 'li')
 
   await $item.getByLabelText('編集').click()
   await $item.getByRole('textbox').fill('テスト2-edited')
   await $item.getByLabelText('キャンセル').click()
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   await expect.element($preview).toHaveTextContent(/^テスト2$/)
 
@@ -120,12 +119,12 @@ it('itemのテキスト編集をキャンセルするとpreviewが元に戻りup
 it('itemの削除ボタンを押しconfirmするとupdateActionが呼ばれitemが削除される', async () => {
   vi.spyOn(window, 'confirm').mockReturnValue(true)
   const mocks = prepareMocks(defaultQueries)
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $preview = onlyVisible($.getByText('テスト2'))
   const $item = closest($preview, 'li')
 
   await $item.getByLabelText('削除').click()
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   expect(mocks().updateAction).toBeCalledTimes(1)
   expect(mocks().updateAction).toBeCalledWith([{ id: '1', text: 'テスト1' }])
@@ -135,12 +134,12 @@ it('itemの削除ボタンを押しconfirmするとupdateActionが呼ばれitem�
 it('itemの削除ボタンを押しconfirmしないとupdateActionが呼ばれずitemが削除されない', async () => {
   vi.spyOn(window, 'confirm').mockReturnValue(false)
   const mocks = prepareMocks(defaultQueries)
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $preview = onlyVisible($.getByText('テスト2'))
   const $item = closest($preview, 'li')
 
   await $item.getByLabelText('削除').click()
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   expect(mocks().updateAction).not.toBeCalled()
   await expect.element($item).toBeInTheDocument()
@@ -151,7 +150,7 @@ it('queryをドラッグ&ドロップするとupdateActionが呼ばれ並べ替�
     { id: '1', text: 'テスト1' },
     { id: '2', text: 'テスト2' },
   ])
-  const $ = render(<Queries {...defaultProps} {...mocks()} />)
+  const $ = render(<QueryList {...defaultProps} {...mocks()} />)
   const $q1 = $.getByText('テスト1').all()[0]!
   const $q2 = $.getByText('テスト2').all()[0]!
   const $handle1 = $.getByLabelText('ドラッグハンドル').all()[0]!
@@ -161,7 +160,7 @@ it('queryをドラッグ&ドロップするとupdateActionが呼ばれ並べ替�
 
   await $handle1.dropTo($handle2)
   await new Promise((resolve) => setTimeout(resolve, 500))
-  $.rerender(<Queries {...defaultProps} {...mocks()} />)
+  $.rerender(<QueryList {...defaultProps} {...mocks()} />)
 
   expect(mocks().updateAction).toBeCalledTimes(1)
   expect(mocks().updateAction).toBeCalledWith([

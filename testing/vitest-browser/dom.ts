@@ -1,4 +1,19 @@
 import { Locator, page } from '@vitest/browser/context'
+import { ReactElement } from 'react'
+import {
+  ComponentRenderOptions,
+  // eslint-disable-next-line no-restricted-imports
+  render as renderOriginal,
+} from 'vitest-browser-react'
+
+import { AppProvider } from '@/components/ui/app-provider'
+
+export function render(
+  ui: ReactElement,
+  options?: Omit<ComponentRenderOptions, 'wrapper'>,
+) {
+  return renderOriginal(ui, { wrapper: AppProvider, ...options })
+}
 
 export function onlyVisible(loc: Locator) {
   const visibleElements = loc.elements().filter((el) => {

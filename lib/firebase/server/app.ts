@@ -12,7 +12,7 @@ const options = serviceAccountJson
   ? { credential: cert(JSON.parse(serviceAccountJson)) }
   : undefined
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'production') {
   process.env.FIREBASE_AUTH_EMULATOR_HOST = emulatorHost.auth
   process.env.FIRESTORE_EMULATOR_HOST = emulatorHost.firestore
 }

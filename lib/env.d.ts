@@ -5,8 +5,9 @@ declare namespace NodeJS {
   type VercelEnv = 'production' | 'preview' | 'development'
 
   interface ProcessEnv {
+    readonly CI?: string
+
     readonly FIREBASE_CONFIG?: string
-    readonly FIREBASE_EMULATOR_PROJECT_ID?: string
     FIREBASE_AUTH_EMULATOR_HOST?: string
     FIRESTORE_EMULATOR_HOST?: string
     FIREBASE_STORAGE_EMULATOR_HOST?: string

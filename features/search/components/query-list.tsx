@@ -14,7 +14,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { createId } from '@paralleldrive/cuid2'
-import { useOptimistic, useState, useTransition } from 'react'
+import { useId, useOptimistic, useState, useTransition } from 'react'
 import { LuPlus } from 'react-icons/lu'
 
 import { Alert } from '@/components/ui/snippets/alert'
@@ -33,7 +33,8 @@ interface Props {
 
 const maxItems = 100
 
-export function Queries({ type, queries, updateAction }: Props) {
+export function QueryList({ type, queries, updateAction }: Props) {
+  const dndContextId = useId()
   const sensors = useSensors(
     useSensor(SmartPointerSensor, {
       // activationConstraint: { distance: 5 },
@@ -118,6 +119,7 @@ export function Queries({ type, queries, updateAction }: Props) {
 
       {displayQueries.length ? (
         <DndContext
+          id={dndContextId}
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={dragEnd}

@@ -1,34 +1,28 @@
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { headers } from 'next/headers.js'
+import { redirect } from 'next/navigation.js'
 
-class Router {
-  async getCurrentOrigin() {
-    const headerList = await headers()
-    const host = headerList.get('host')
-    if (!host) {
-      throw new Error('Host missing')
-    }
-    return host.startsWith('localhost:') ? `http://${host}` : `https://${host}`
+async function getCurrentOrigin() {
+  const headerList = await headers()
+  const host = headerList.get('host')
+  if (!host) {
+    throw new Error('Host missing')
   }
-
-  async getCallbackUrl() {
-    const origin = await this.getCurrentOrigin()
-    return `${origin}/callback`
-  }
-
-  redirectToSignIn(error = false): never {
-    redirect(error ? '/?sign-in-error=true' : '/')
-  }
-
-  redirectToHome(): never {
-    redirect('/home')
-  }
-
-  redirectToExternalUrl(url: string): never {
-    redirect(url)
-  }
+  return host.startsWith('localhost:') ? `http://${host}` : `https://${host}`
 }
 
-export type { Router }
+export async function getCallbackPageUrl() {
+  const origin = await getCurrentOrigin()
+  return `${origin}/callback`
+}
 
-export const router = new Router()
+export function redirectToSignIn(error = false): never {
+  redirect(error ? '/?sign-in-error=true' : '/')
+}
+
+export function redirectToHome(): never {
+  redirect('/home')
+}
+
+export function redirectToExternalUrl(url: string): never {
+  redirect(url)
+}
