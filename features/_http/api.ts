@@ -1,3 +1,5 @@
+import { unstable_rethrow as rethrow } from 'next/navigation'
+
 import {
   buildXAuthorizationUrl,
   generateXAccessToken,
@@ -103,6 +105,7 @@ export async function handleXRedirect(params: {
 
     return redirectToHome()
   } catch (error) {
+    rethrow(error)
     console.error(error)
     return redirectToSignIn(true)
   }
