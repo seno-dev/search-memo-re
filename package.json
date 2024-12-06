@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tsc -P tsconfig.server.json",
     "chakra:snippet:add": "chakra snippet add --outdir components/ui/snippets",
-    "chakra:typegen": "chakra typegen config/theme.ts",
+    "chakra:typegen": "chakra typegen lib/theme.ts",
     "emulators:start": "firebase emulators:start --import=.data/emulators --export-on-exit",
     "icons": "rm -r public/icons && pwa-asset-generator icon.png public/icons -c -p 0 -o false && cp public/icons/apple-icon-180.png app/apple-icon.png && cp public/icons/manifest-icon-192.maskable.png app/icon.png",
     "lint": "eslint --fix '**/*.{js,jsx,ts,tsx}'",
