@@ -42,7 +42,10 @@ export async function getCurrentUser() {
 export async function redirectToHomeIfSignedIn() {
   const session = await getCookie('session')
   if (session) {
-    return redirectToHome()
+    const token = await authAdmin.verifySessionCookie(session).catch(() => null)
+    if (token) {
+      return redirectToHome()
+    }
   }
 }
 
